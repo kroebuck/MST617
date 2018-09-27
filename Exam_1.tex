@@ -10,14 +10,92 @@
 \usetikzlibrary{intersections}
 \usepackage{subcaption}
 \usepackage{mathrsfs}
-
-\newenvironment{OperationDef}[1]{\begin{quote}{\textit{#1}:\\}}{\end{quote}}
-\newenvironment{Proof}{\begin{quote}{\textit{Proof}:\\}}{\end{quote}}
-\newenvironment{Homework}[2]{\begin{quote}{\textbf{#1}---\ \textit{#2}:\\}}{\end{quote}}
-\DeclareMathOperator{\sgn}{sgn}
+\usepackage{mdframed}
 
 \begin{document}
+\title{Complex Analysis: Exam 1B}
+\author{Kevin Roebuck}
+\maketitle
 
-\section{Basic Tensor Analysis}bbb
+\begin{enumerate}
+\item (20) Miscellaneous computations. Show all necessary steps.
+  \begin{enumerate}
+  \item Compute all values of $(1 - i)^{\frac{4}{3}} = ((1 - i)^4)^{\frac{1}{3}}$.
+
+  \begin{mdframed}[align=left]
+    Begin by writing $z = 1 - i$ in polar form. The modulus is $|z| = \sqrt{1^2 + (-1)^2} = \sqrt{2}$. Then, by using the relationships
+    \begin{align*}
+      \cos\theta = \frac{\text{Re}(z)}{|z|} \qquad \text{and} \qquad \sin\theta = \frac{\text{Im}(z)}{|z|},
+    \end{align*}
+    we see that $\cos\theta = 1/\sqrt{2}$ and $\sin\theta = -1/\sqrt{2}$. From this set of equations we conclude that Arg$(z) = -\pi/4$. Therefore $z = \sqrt{2}e^{-i\pi/4}$. Raising $z$ to the fourth power gives $z^4 = 4e^{-i\pi}$. Now all that's left to do is find the cube roots of $z^4$, which will require the use of
+    \begin{equation*}
+      z^{1/m} = |z|^{1/m}e^{i(\theta + 2k\pi)/m} \qquad (k = 0,1,2,...,m-1).
+    \end{equation*}
+    In our case $m = 3$ so that the above equation takes the form
+    \begin{equation*}
+      (z^4)^{1/3} = \left|z^4\right|^{1/3}e^{i(-\pi + 2k\pi)/3}
+      = 4^{1/3}e^{i\pi(2k - 1)/3}
+      \qquad (k = 0,1,2).
+    \end{equation*}
+    By plugging in the possible values of $k$, we get
+    \begin{center}
+	    \begin{tabular}{ | l | l | l | p{5cm} |}
+	    \hline
+	    k & $z^{4/3}$ \\ \hline
+	    0 & $4^{1/3}e^{-i\pi/3}$ \\ \hline
+	    1 & $4^{1/3}e^{i\pi/3}$ \\ \hline
+	    2 & $4^{1/3}e^{i\pi}$ \\
+	    \hline
+	    \end{tabular}
+
+	    \begin{tikzpicture} [scale=1.2]
+	    \draw[-] (0,0) -- (4,0); %draw axes
+        \draw[-] (0,0) -- (0,4);
+        \draw[line width=0.5mm, ->] (0,0) -- (-4,0); %draw z^4 vector
+        \draw[opacity=0.2] (0,0) circle(1.587cm); % draw circle
+        \draw[line width=0.5mm, ->] (0,0) -- (1.587,0); %draw cube root vectors
+
+        %draw labels
+        \node at (4.2,0) {$x$};
+        \node at (0,4.2) {$y$};
+        \node at (-4.1,0.2) {$z^4$};
+      \end{tikzpicture}
+	\end{center}
+  \end{mdframed}
+  
+  \item Compute ${\displaystyle \int_0^{2\pi}} \cos^5(x)dx$ using methods introduced in our class.
+  
+  \item Find the partial fraction decomposition of ${\displaystyle \frac{z^2 + z + 1}{(z - i)^2 (z + 2)}}$. (You do not need to simplify the constants that you solve for.)
+  
+  \item Describe the set of points $|z| = 2|z - i|$.
+  
+  \end{enumerate}
+
+\item (5) Use the idea of local linear approximation to describe what happens to a small disc centered at $z_0 = 3 + 4i$ when it is substituted into $f(z) = 1/z$. Describe what happens in the language of translations, rotations, expansions, and/or contractions. Draw an appropriate diagram.
+
+
+\item (10) Describe the projection on the Riemann Sphere of the set $\{z = x + iy : x \geq \sqrt{3}\}$. I encourage you to include a nice diagram.
+
+
+\item (15) Choose one of the following explorations.
+\begin{enumerate}
+  \addtocounter{enumii}{1}
+  \item  An exploration of {\it admissibility}. Recall that if $z = x + iy$, then $x = \frac{1}{2}(z + \bar{z})$ and $y = \frac{1}{2i}(z - \bar{z})$.
+  
+  \begin{enumerate}
+  \item (4) Substitute for $x$ and $y$ in $f(x, y) = x^2 − y^2 + i2xy$ and verify that $f$ reduces to a function of $z$ only, i.e. that there are no $z$ terms remaining after simplification. Also use the Cauchy Riemann Equations to verify that $f$ is analytic.
+    
+  \item (4) Substitute for $x$ and $y$ in $g(x, y) = x^2 − y^2 + i3xy$ and verify that $f$ does not reduce to a function of $z$ only, i.e. that there are still $z$ terms remaining after simplification. Also use the Cauchy Riemann Equations to verify that $g$ is not analytic.
+
+  \item (7) {\it Admissibility} essentially boils down to the idea that $f(x,y) = u(x, y) + iv(x, y)$ does not depend on $z$. A more precise way to say this is that $\frac{\partial f}{\partial \bar{z}} = 0$. Use the multivariable chain rule,
+  \begin{equation*}
+    \frac{\partial f}{\partial \bar{z}} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial \bar{z}} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial \bar{z}},
+  \end{equation*}
+  to show that $\frac{\partial f}{\partial \bar{z}} = 0$ if the Cauchy Riemann Equations are satisfied. This indicates that $f$ does not depend on $z$ if $f$ is analytic.
+  
+  \end{enumerate}
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}
