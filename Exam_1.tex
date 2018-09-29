@@ -11,6 +11,7 @@
 \usepackage{subcaption}
 \usepackage{mathrsfs}
 \usepackage{mdframed}
+\usepackage{makecell}
 
 \begin{document}
 \title{Complex Analysis: Exam 1B}
@@ -27,7 +28,7 @@
     \begin{align*}
       \cos\theta = \frac{\text{Re}(z)}{|z|} \qquad \text{and} \qquad \sin\theta = \frac{\text{Im}(z)}{|z|},
     \end{align*}
-    we see that $\cos\theta = 1/\sqrt{2}$ and $\sin\theta = -1/\sqrt{2}$. From this set of equations we conclude that Arg$(z) = -\pi/4$. Therefore $z = \sqrt{2}e^{-i\pi/4}$. Raising $z$ to the fourth power gives $z^4 = 4e^{-i\pi}$. Now all that's left to do is find the cube roots of $z^4$, which will require the use of
+    we see that $\cos\theta = 1/\sqrt{2}$ and $\sin\theta = -1/\sqrt{2}$. From this set of equations we conclude that Arg$(z) = -\pi/4$. Therefore $z = \sqrt{2}e^{-i\pi/4}$. Raising $z$ to the fourth power gives $z^4 = 4e^{-i\pi}$ = -4. Now all that's left to do is find the cube roots of $z^4$, which will require the use of
     \begin{equation*}
       z^{1/m} = |z|^{1/m}e^{i(\theta + 2k\pi)/m} \qquad (k = 0,1,2,...,m-1).
     \end{equation*}
@@ -37,44 +38,129 @@
       = 4^{1/3}e^{i\pi(2k - 1)/3}
       \qquad (k = 0,1,2).
     \end{equation*}
-    By plugging in the possible values of $k$, we get
+    By plugging in the possible values of $k$, we get:
+
     \begin{center}
-	    \begin{tabular}{ | l | l | l | p{5cm} |}
-	    \hline
-	    k & $z^{4/3}$ \\ \hline
-	    0 & $4^{1/3}e^{-i\pi/3}$ \\ \hline
-	    1 & $4^{1/3}e^{i\pi/3}$ \\ \hline
-	    2 & $4^{1/3}e^{i\pi}$ \\
-	    \hline
-	    \end{tabular}
+    \begin{tabular}{|l|l|}\hline
+      $k$ & $z^{4/3}$ \\\Xhline{2\arrayrulewidth}
+      0 & $4^{1/3}e^{-i\pi/3}$ \\\hline
+      2 & $4^{1/3}e^{i\pi/3}$ \\\hline
+      2 & $4^{1/3}e^{i\pi}$ \\\hline
+    \end{tabular}
+    \end{center}
 
-	    \begin{tikzpicture} [scale=1.2]
-	    \draw[-] (0,0) -- (4,0); %draw axes
-        \draw[-] (0,0) -- (0,4);
-        \draw[line width=0.5mm, ->] (0,0) -- (-4,0); %draw z^4 vector
-        \draw[opacity=0.2] (0,0) circle(1.587cm); % draw circle
-        \draw[line width=0.5mm, ->] (0,0) -- (1.587,0); %draw cube root vectors
+    A plot of these roots, along with the vector representing $z^4$, can be seen in the figure below.
 
-        %draw labels
-        \node at (4.2,0) {$x$};
-        \node at (0,4.2) {$y$};
-        \node at (-4.1,0.2) {$z^4$};
-      \end{tikzpicture}
-	\end{center}
+    \begin{center}
+    \begin{tikzpicture} [scale=1.2]
+      \draw[-] (0,0) -- (4,0); %draw axes
+      \draw[-] (0,0) -- (0,4);
+      \draw[line width=0.5mm, ->] (0,0) -- (-4,0); %draw z^4 vector
+      %\draw[opacity=0.2] (0,0) circle(1.587cm); % draw circle
+      \draw[line width=0.5mm, ->] (0,0) -- (-1.587,0); %draw cube root vectors
+      \draw[line width=0.5mm, ->] (0,0) -- (0.793,-1.375);
+      \draw[line width=0.5mm, ->] (0,0) -- (0.793,1.375);
+
+      %draw labels
+      \node at (4.2,0) {$x$};
+      \node at (0,4.2) {$y$};
+      \node at (-4.1,0.2) {$z^4$};
+      \node at (1.7,-1.5) {$z^{4/3} (k=0)$};
+      \node at (1.7,1.5) {$z^{4/3} (k=1)$};
+      \node at (-1,0.3) {$z^{4/3} (k=2)$};
+    \end{tikzpicture}
+    \end{center}
   \end{mdframed}
   
-  \item Compute ${\displaystyle \int_0^{2\pi}} \cos^5(x)dx$ using methods introduced in our class.
+  \item Compute ${\displaystyle \int_0^{2\pi}} \cos^5(x)\,dx$ using methods introduced in our class.
   
+  \begin{mdframed}
+    Start by simplifying the integrand using Euler's formula
+    \begin{equation*}
+      \cos^5 x = \left[\frac{e^{ix} + e^{-ix}}{2}\right]^5 = \frac{1}{2^5}[e^{ix} + e^{-ix}]^5.
+    \end{equation*}
+    Expanding via the binomial formula gives
+    \begin{align*}
+      \cos^5 x &= \frac{1}{2^5}[e^{5ix} + 5e^{4ix}e^{-ix} + 10e^{3ix}e^{-2ix} + 10e^{2ix}e^{-3ix} + 5e^{ix}e^{-4ix} + e^{-5ix}] \\
+      &= \frac{1}{2^5}[(e^{5ix} + e^{-5ix}) + 5(e^{3ix} + e^{-3ix}) + 10(e^{ix} + e^{-ix})] \\
+      &= \frac{1}{2^5}[(2\cos 5x) + (2\cos 3x) + (2\cos x)] \\
+      &= \frac{1}{2^4}[\cos 5x + \cos 3x + \cos x].
+    \end{align*}
+    Therefore
+    \begin{align*}
+      \int_0^{2\pi}\cos^5 x\, dx &= \frac{1}{2^4}\int_0^{2\pi}\left[\cos 5x + \cos 3x + \cos x\right]dx \\
+      &= \frac{1}{2^4}\left[\frac{1}{5}\sin 5x + \frac{5}{3}\sin 3x + 10\sin x\right]_0^{2\pi} \\
+      &= 0.
+    \end{align*}
+  \end{mdframed}
+
   \item Find the partial fraction decomposition of ${\displaystyle \frac{z^2 + z + 1}{(z - i)^2 (z + 2)}}$. (You do not need to simplify the constants that you solve for.)
+
+  \begin{mdframed}
+    The desired form is
+    \begin{equation*}
+      R(z) \equiv \frac{z^2 + z + 1}{(z - i)^2 (z + 2)} = \frac{A_0^{(1)}}{z+2} + \frac{A_0^{(2)}}{(z - i)^2} + \frac{A_1^{(2)}}{z - i}.
+    \end{equation*}
+    With the function in this form, we are now able to make use of the general expression for the coefficients of the partial fraction decomposition of a rational function $R_{m,n}(z)$ (whose denominator degree $n = d_1 + d_2 + ... + d_r$ exceeds its numerator degree $m$):
+    \begin{equation*}
+      A_s^{(j)} = \lim_{z\rightarrow\xi_j}\frac{1}{s!}\frac{d^s}{dz^2}\left[(z - \xi_j)^{d_j}R_{m,n}(z)\right],
+    \end{equation*}
+    where $\xi_j$ are distinct roots and $d_j$ is the degree of the root. We find that
+    \begin{equation*}
+      A_0^{(1)} = \lim_{z\rightarrow -2}(z + 2)R(z) = \lim_{z\rightarrow -2} \frac{z^2 + z + 1}{(z - i)^2} = \frac{3}{3 + 4i} = \frac{3}{3 + 4i}\left(\frac{3 - 4i}{3 - 4i}\right) = \frac{9}{25} - \frac{12}{25}i.
+    \end{equation*}
+    The next coefficient is
+    \begin{equation*}
+      A_0^{(2)} = \lim_{z\rightarrow i} (z - i)^2 R(z) = \lim_{z\rightarrow i} \frac{z^2 + z + 1}{z + 2} = \frac{i}{i + 2} = \frac{i}{i + 2}\left(\frac{-i + 2}{-i + 2}\right) = \frac{1}{5} + \frac{2}{5}i.
+    \end{equation*}
+    Finally, we have
+    \begin{align*}
+      A_1^{(2)} &= \lim_{z\rightarrow i} \frac{d}{dz}\left[(z - i)^2 R(z)\right] = \lim_{z\rightarrow i} \frac{d}{dz}\left[\frac{z^2 + z + 1}{z + 2}\right] = \lim_{z\rightarrow i} \left[\frac{(2z + 1)(z + 2) - (z^2 + z + 1)}{(z + 2)^2}\right] \\
+      &= \lim_{z\rightarrow i} \left[\frac{z^2 + 4z + 1}{(z + 2)^2}\right] = \frac{4i}{3 + 4i} = \frac{4i}{3 + 4i}\left(\frac{3 - 4i}{3 - 4i}\right) = \frac{16}{25} + \frac{12}{25}i.
+    \end{align*}
+    Putting everything together:
+    \begin{equation*}
+      R(z) \equiv \frac{z^2 + z + 1}{(z - i)^2 (z + 2)} = \frac{\frac{9}{25} - \frac{12}{25}i}{z+2} + \frac{\frac{1}{5} + \frac{2}{5}i}{(z - i)^2} + \frac{\frac{16}{25} + \frac{12}{25}i}{z - i}.
+    \end{equation*}
+  \end{mdframed}
   
   \item Describe the set of points $|z| = 2|z - i|$.
+
+  \begin{mdframed}
+  The modulus of a complex number $z = x + iy$ is given by $|z| = (x^2 + y^2)^{1/2}$. To avoid dealing with the square roots, let us square both sides of the given equation and write out the moduli in terms of $x$ and $y$
+  \begin{align*}
+    x^2 + y^2 &= 4(x^2 + (y-1)^2) \\
+    &= 4(x^2 + y^2 - 2y + 1).
+  \end{align*}
+  Grouping terms together yields
+  \begin{equation*}
+    x^2 + \left(y^2 - \frac{8}{3}y\right) = -\frac{4}{3}.
+  \end{equation*}
+  We shall next complete the square by adding $(4/3)^2$ to each side
+  \begin{equation*}
+    x^2 + \left(y^2 - \frac{8}{3}y + \frac{16}{9}\right) = -\frac{4}{3} + \frac{16}{9},
+  \end{equation*}
+  which simplifies to
+  \begin{equation*}
+    x^2 + \left(y - \frac{4}{3}\right)^2 = \frac{4}{9}.
+  \end{equation*}
+  This is the equation for a circle centered about the point $(x,y) = (0,4/3)$ and with radius $(4/9)^{1/2} = 2/3$. Therefore, the set of points that satisfy $|z| = 2|z - i|$ are all of the points on the circle centered about the point $(x,y) = (0,4/3)$ and with radius $2/3$.
+  \end{mdframed}
   
   \end{enumerate}
 
 \item (5) Use the idea of local linear approximation to describe what happens to a small disc centered at $z_0 = 3 + 4i$ when it is substituted into $f(z) = 1/z$. Describe what happens in the language of translations, rotations, expansions, and/or contractions. Draw an appropriate diagram.
 
+\begin{mdframed}
+  
+\end{mdframed}
+
 
 \item (10) Describe the projection on the Riemann Sphere of the set $\{z = x + iy : x \geq \sqrt{3}\}$. I encourage you to include a nice diagram.
+
+\begin{mdframed}
+  
+\end{mdframed}
 
 
 \item (15) Choose one of the following explorations.
@@ -83,16 +169,29 @@
   \item  An exploration of {\it admissibility}. Recall that if $z = x + iy$, then $x = \frac{1}{2}(z + \bar{z})$ and $y = \frac{1}{2i}(z - \bar{z})$.
   
   \begin{enumerate}
-  \item (4) Substitute for $x$ and $y$ in $f(x, y) = x^2 − y^2 + i2xy$ and verify that $f$ reduces to a function of $z$ only, i.e. that there are no $z$ terms remaining after simplification. Also use the Cauchy Riemann Equations to verify that $f$ is analytic.
+  \item (4) Substitute for $x$ and $y$ in $f(x,y) = x^2 - y^2 + i2xy$ and verify that $f$ reduces to a function of $z$ only, i.e. that there are no $z$ terms remaining after simplification. Also use the Cauchy Riemann Equations to verify that $f$ is analytic.
+
+  \begin{mdframed}
+  
+  \end{mdframed}
+
     
-  \item (4) Substitute for $x$ and $y$ in $g(x, y) = x^2 − y^2 + i3xy$ and verify that $f$ does not reduce to a function of $z$ only, i.e. that there are still $z$ terms remaining after simplification. Also use the Cauchy Riemann Equations to verify that $g$ is not analytic.
+  \item (4) Substitute for $x$ and $y$ in $g(x,y) = x^2 - y^2 + i 3 x y$ and verify that $f$ does not reduce to a function of $z$ only, i.e. that there are still $z$ terms remaining after simplification. Also use the Cauchy Riemann Equations to verify that $g$ is not analytic.
+
+  \begin{mdframed}
+  
+  \end{mdframed}
 
   \item (7) {\it Admissibility} essentially boils down to the idea that $f(x,y) = u(x, y) + iv(x, y)$ does not depend on $z$. A more precise way to say this is that $\frac{\partial f}{\partial \bar{z}} = 0$. Use the multivariable chain rule,
   \begin{equation*}
     \frac{\partial f}{\partial \bar{z}} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial \bar{z}} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial \bar{z}},
   \end{equation*}
   to show that $\frac{\partial f}{\partial \bar{z}} = 0$ if the Cauchy Riemann Equations are satisfied. This indicates that $f$ does not depend on $z$ if $f$ is analytic.
+
+  \begin{mdframed}
   
+  \end{mdframed}
+
   \end{enumerate}
 \end{enumerate}
 
